@@ -1,0 +1,30 @@
+- name: Instalar Elasticsearch en host1 y host2 # Nombre del PlayBook
+  hosts: host1:host2  # Nodos a los que afectará el PlayBook
+  become: true # Nos permite utilizar permisos de root en caso de necesitarlo
+
+  tasks: # Tareas a realizar en el PlayBook
+    - name: Actualizar caché del sistema y paquetes # Tarea 1: Actualizar paquetes
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"  # Hace que la tarea solo se ejecute cuando la distribución de Linux admite paqueteria apt.
+
+    - name: Instalar Java  # Tarea 2: Instalación de Java necesaria para la utilización de Elasticsearch
+      apt:
+        name: default-jdk # Instalación de Java Development Kit
+        state: present  # Se asegura de que java este presente en los hosts
+
+    - name: Descargar Elasticsearch deb  # Tarea 3: Descarga Instalador Elasticsearch
+      get_url:
+        url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.0-amd64.deb  # URL de el sitio de instalación de Elasticsearch
+        dest: /tmp/elasticsearch.deb # Directorio de alamcenamiento del instalador
+
+    - name: Instalar Elasticsearch  # Tarea 4: Instalación de Elasticsearch
+      apt:
+        deb: /tmp/elasticsearch.deb # Directorio de almacenamiento del instalador
+      notify: Restart Elasticsearch # Llamada al manejador "Reinicio ELasticsearch" 
+
+  handlers: # Manejador reinicia el servicio Elasticsearch
+    - name: Reinicio Elasticsearch
+      service:
+        name: elasticsearch
+        state: restarted
