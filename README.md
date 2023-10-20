@@ -15,13 +15,13 @@
   - **b) Automatizar la configuración y el despliegue de sistemas y aplicaciones.** (+)
   - c) Administrar bases de datos.
 
-4. **¿Cuál es el propósito de Elasticsearch en una infraestructura DevOps?**
+3. **¿Cuál es el propósito de Elasticsearch en una infraestructura DevOps?**
    -
   - a) Una herramienta de seguimiento de problemas y errores.
   - **b) Un motor de búsqueda y análisis de datos en tiempo real.** (+)
   - c) Un servidor de aplicaciones.
 
-6. **¿Por qué es importante utilizar Ansible para instalar Elasticsearch en lugar de configurarlo manualmente en cada nodo?**
+4. **¿Por qué es importante utilizar Ansible para instalar Elasticsearch en lugar de configurarlo manualmente en cada nodo?**
    -
   - **a) Acelera el proceso de instalación y configuración.** (+)
   - **b) Garantiza que todos los nodos tengan configuraciones idénticas.** (+)
