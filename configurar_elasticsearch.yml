@@ -1,0 +1,19 @@
+- name: Configurar Elasticsearch en nodos gestionados
+  hosts: host1:host2
+  become: true
+
+  tasks:
+    - name: Editar el archivo de configuración Elasticsearch.yml
+      blockinfile:
+        path: "/etc/elasticsearch/elasticsearch.yml"
+        block: |
+          network.host: 0.0.0.0
+          http.port: 9200
+          discovery.seed_hosts: ["192.168.1.171", "192.168.1.172"]
+      when: inventory_hostname in groups['NODOS']
+
+    - name: Reiniciar Elasticsearch
+      service:
+        name: elasticsearch
+        state: restarted
+      when: inventory_hostname in groups['NODOS']
