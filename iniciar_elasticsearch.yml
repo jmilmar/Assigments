@@ -1,0 +1,12 @@
+- name: Iniciar Elasticsearch en host1 y host2
+  hosts: host1:host2
+  become: true
+
+  tasks:
+    - name: Iniciar el servicio Elasticsearch
+      systemd:
+        name: elasticsearch
+        enabled: yes
+        state: started
+      become: true
+      when: inventory_hostname in groups['NODOS']
